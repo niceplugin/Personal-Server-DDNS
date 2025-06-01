@@ -1,15 +1,25 @@
-# Dynamic IP Web Server
+# 동적 IP 웹 서버
 
-This project aims to provide web services using a personal PC with dynamic IP as a server.
-The PC that will serve as the server is assumed to be directly connected to the modem, not through a router.
-(If using a router, port forwarding configuration is required.)
+이 프로젝트는 유동 IP 기반의 인터넷(네트워크) 환경에서 개인 PC(서버)에 도메인을 연결하여 웹을 호스팅하는 것을 목표로 합니다.\
+(유동 IP 환경에서 DDNS를 구현하는 것이 목표입니다.)\
+서버 역할을 할 PC는 라우터를 통하지 않고 모뎀에 직접 연결되어 있다고 가정합니다.\
+(라우터를 사용하는 경우 포트 포워딩 설정이 필요합니다.)
 
-The server requires both nginx and nodejs batch files to be running.
-For the nodejs batch file, use the output of `npm run build` (modify the `/src/*` source files if necessary).
-Set up the environment variables needed for the nodejs batch file by referring to the `/.env.example` file.
-(You need to create an `.env` file.)
+## 진행순서
 
-Cloudflare workers are used to detect changes in your server's IP address.
-Refer to the `/workers/.env.example` file for the environment variables used by the worker.
-Worker deployment is done manually through the Cloudflare dashboard.
-(GitHub connected auto-deployment is excluded as it's a beta feature at the time of writing this document.)
+1. 자신의 웹 서비스를 구동하고 포트를 기억합니다.
+   - 예: http://localhost:3000
+2. `/workers/README.md` 파일을 참고하여 Cloudflare 워커를 설정합니다.
+3. `/nginx/README.md` 파일을 참고하여 nginx를 설정합니다.
+4. 필요한 경우 `/src/**` 파일을 수정합니다.\
+   일반적으로는 `npm run build` 후 `npm run start` 와 같이 사용해도 문제 없습니다.\
+   (내 PC에 nodejs, PM2, npm 환경이 구성되어 있어야 합니다.)
+
+## 기타
+
+- 워커 배포는 Cloudflare 대시보드를 통해 수동으로 수행됩니다.\
+  (GitHub 연동 자동 배포는 이 문서 작성 시점에서 베타 기능이므로 고려하지 않았습니다.)
+- 기본적으로 Cloudflare 프록싱이 내 PC의 IP를 숨깁니다.\
+  따라서 내 PC에 보안을 위해 별도의 SSL 인증서를 설치할 필요는 없습니다.\
+  단, 다른 서버와 내부 통신, 파이프라인 구축 등을 고려중이라면\
+  서버 접근 정책, 포트 관리, SSL 인증서 등은 직접 구현해야 합니다.

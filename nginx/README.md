@@ -1,20 +1,29 @@
-# Nginx Configuration Guide
+# Nginx 설정 가이드
 
-This guide is based on nginx version 1.28.0
+이 가이드는 nginx 버전 1.28.0을 기준으로 작성되었습니다.
 
-## Basic Workflow
+## nginx 설치
 
-After deploying a new service URL on the server:
-1. Add the appropriate configuration to the `nginx.conf` file
-2. Restart nginx without any downtime using the reload command
+OS에 따라 nginx를 설치하는 방법은 다릅니다.
+직접 상황에 맞게 설치하세요.
+아래 내용은 이미 설치를 완료했다는 가정하에 작성되었습니다.
+
+nginx는 서버로 사용할 내 개인 PC에 설치해야 합니다.
+
+## 설정 파일 변경
+
+`/nginx/nginx.conf` 파일을 열어 40, 43 line 의 값을 확인하고 자신의 상황에 맞게 변경합니다.
+
+nginx 프로세스를 시작합니다.
+만약 이미 실행중이라면 다음 명령을 사용하여 다운타임 없이 nginx를 재시작합니다.
 
 ```bash
 nginx -s reload
 ```
 
-## Additional Information
+## 추가 정보
 
-- The reload command signals nginx to reload its configuration without interrupting the processing of current requests
-- Make sure to test your nginx configuration before reloading with `nginx -t`
-- Configuration files are typically located in `/etc/nginx/` on Linux or in the nginx installation directory on Windows
-- For more complex setups, consider using separate configuration files in the `conf.d/` directory
+- reload 명령은 현재 요청 처리를 중단하지 않고 nginx 설정을 다시 로드하도록 신호를 보냅니다.
+- 재로드하기 전에 `nginx -t` 명령으로 nginx 설정을 테스트하세요.
+- 설정 파일은 일반적으로 Linux에서는 `/etc/nginx/`에, Windows에서는 nginx 설치 디렉토리에 위치합니다.
+- 더 복잡한 설정의 경우 `conf.d/` 디렉토리에 별도의 설정 파일을 사용하는 것을 고려하세요.
